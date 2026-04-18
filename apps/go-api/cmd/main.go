@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"os"
 )
 
 // @title GopherDrop API
@@ -20,6 +21,11 @@ import (
 // @BasePath /
 
 func main() {
+	// Asegurar que el directorio de uploads existe
+	if _, err := os.Stat("uploads"); os.IsNotExist(err) {
+		os.MkdirAll("uploads", 0755)
+	}
+
 	db, err := repository.InitDB()
 	if err != nil {
 		panic("failed to connect database")

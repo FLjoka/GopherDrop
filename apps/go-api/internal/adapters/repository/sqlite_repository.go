@@ -2,6 +2,8 @@ package repository
 
 import (
 	"apps/go-api/internal/core/domain"
+	"os"
+	"path/filepath"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -53,7 +55,16 @@ func (r *SQLFileMetadataRepository) Delete(id int) error {
 }
 
 func InitDB() (*gorm.DB, error) {
-	db, err := gorm.Open(sqlite.Open("data/db.db"), &gorm.Config{})
+	dbPath := "data/db.db"
+	dbDir := filepath.Dir(dbPath)
+
+	if _, err := os.Stat(dbDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(dbDir, 0755); err != nil {
+			return nil, err
+		}
+	}
+
+	db, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
