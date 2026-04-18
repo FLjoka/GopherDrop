@@ -25,6 +25,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
     "@vitest/ui": "~4.1.0",
+    "autoprefixer": "10.4.13",
     "babel-jest": "^30.0.2",
     "jest": "^30.0.2",
     "jest-environment-jsdom": "^30.0.2",
@@ -32,7 +33,9 @@
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "nx": "22.6.5",
+    "postcss": "8.4.38",
     "prettier": "^3.8.1",
+    "tailwindcss": "3.4.3",
     "ts-jest": "^29.4.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
@@ -45,8 +48,17 @@
     "apps/*"
   ],
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-toast": "^1.2.15",
+    "axios": "^1.15.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.8.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "6.30.3"
+    "react-router-dom": "6.30.3",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "^1.0.7"
   }
 }

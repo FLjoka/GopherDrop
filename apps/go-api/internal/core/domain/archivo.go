@@ -1,15 +1,22 @@
 package domain
 
-type Archivo struct {
-	ID     int    `json:"id"`
-	Nombre string `json:"nombre"`
-	Ruta   string `json:"ruta"`
+import "gorm.io/gorm"
+
+type FileMetadata struct {
+	gorm.Model          // Agrega ID, CreatedAt, UpdatedAt, DeletedAt automáticamente
+	OriginalName string `json:"original_name"`
+	StoredName   string `json:"stored_name"`
+	FilePath     string `json:"file_path"`
+	Size         int64  `json:"size"`
+	ContentType  string `json:"content_type"`
+	ThumbnailPath string `json:"thumbnail_path"`
 }
 
-type ArchivoRepository interface {
-	Save(archivo *Archivo) error
-	FindAll() ([]Archivo, error)
-	FindByID(id int) (*Archivo, error)
-	Update(archivo *Archivo) error
+type FileMetadataRepository interface {
+	Save(archivo *FileMetadata) error
+	FindAll() ([]FileMetadata, error)
+	FindByID(id int) (*FileMetadata, error)
+	FindByName(name string) (*FileMetadata, error)
+	Update(archivo *FileMetadata) error
 	Delete(id int) error
 }

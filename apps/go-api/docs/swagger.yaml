@@ -1,0 +1,173 @@
+basePath: /
+definitions:
+  apps_go-api_internal_core_domain.FileMetadata:
+    properties:
+      content_type:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      file_path:
+        type: string
+      id:
+        type: integer
+      original_name:
+        type: string
+      size:
+        type: integer
+      stored_name:
+        type: string
+      thumbnail_path:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para el manejo de archivos en GopherDrop.
+  title: GopherDrop API
+  version: "1.0"
+paths:
+  /download/{id}:
+    get:
+      description: Descarga un archivo por su ID
+      parameters:
+      - description: ID del archivo
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Descargar archivo
+      tags:
+      - archivos
+  /files:
+    get:
+      description: Obtiene una lista de todos los archivos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apps_go-api_internal_core_domain.FileMetadata'
+            type: array
+      summary: Listar archivos
+      tags:
+      - archivos
+  /files/{id}:
+    delete:
+      description: Elimina el registro y los archivos físicos asociados
+      parameters:
+      - description: ID del archivo
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Borrar archivo
+      tags:
+      - archivos
+  /thumbnails/{id}:
+    get:
+      description: Devuelve la miniatura de una imagen por su ID
+      parameters:
+      - description: ID del archivo
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - image/jpeg
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Obtener miniatura
+      tags:
+      - archivos
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Sube un archivo
+      parameters:
+      - description: Archivo a subir
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apps_go-api_internal_core_domain.FileMetadata'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Subir archivo
+      tags:
+      - archivos
+swagger: "2.0"
