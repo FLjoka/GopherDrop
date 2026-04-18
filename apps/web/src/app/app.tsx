@@ -151,9 +151,11 @@ export function App() {
         {/* Header */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 p-2 rounded-xl">
-              <HardDrive className="w-8 h-8 text-white" />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="GopherDrop Logo" 
+              className="w-14 h-14 object-contain"
+            />
             <div>
               <h1 className="text-2xl font-bold tracking-tight">GopherDrop</h1>
               <p className="text-zinc-500 text-sm">Servidor de archivos ultra rápido</p>
