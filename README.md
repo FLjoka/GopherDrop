@@ -1,106 +1,126 @@
-# New Nx Repository
+# <img src="docs/assets/logo.png" align="right" width="150"> GopherDrop
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+### Servidor de gestión de archivos ultra rápido y moderno.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+**GopherDrop** es una solución robusta y elegante para la gestión de archivos, construida con un backend en **Go** para una velocidad insuperable y un frontend dinámico en **React** que ofrece una experiencia de usuario premium.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
-## Finish your Nx platform setup
+---
 
-🚀 [Finish setting up your workspace](https://cloud.nx.app/connect/SICuFgX21M) to get faster builds with remote caching, distributed task execution, and self-healing CI. [Learn more about Nx Cloud](https://nx.dev/ci/intro/why-nx-cloud).
-## Generate a library
+## 🚀 Características Principales
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+- **Subida Instantánea**: Soporte para arrastrar y soltar (Drag & Drop) con retroalimentación en tiempo real.
+- **Visualización Inteligente**: Generación automática de miniaturas para imágenes.
+- **Vista Previa**: Modal integrado para visualizar imágenes sin necesidad de descarga.
+- **Gestión Completa**: Listado detallado, descarga directa y eliminación permanente de archivos.
+- **Estética Moderna**: Interfaz limpia diseñada con Shadcn UI y Lucide Icons.
+- **Arquitectura de Microservicios**: Backend en Go (Gin) y Frontend en React, gestionados eficientemente a través de un monorepo con **Nx**.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+### Backend
+- **Lenguaje**: [Go (Golang)](https://go.dev/)
+- **Framework Web**: [Gin Gonic](https://gin-gonic.com/)
+- **Base de Datos**: SQLite (vía GORM)
+- **Documentación**: Swagger (vía swaggo)
+- **Procesamiento de Imagen**: `disintegration/imaging` para thumbnails.
+
+### Frontend
+- **Framework**: [React](https://reactjs.org/) con Vite
+- **Estilizado**: [Tailwind CSS](https://tailwindcss.com/)
+- **Componentes**: [Shadcn UI](https://ui.shadcn.com/)
+- **Iconografía**: [Lucide React](https://lucide.dev/)
+- **Gestión de Estado/Efectos**: React Hooks (useState, useEffect, useCallback)
+
+---
+
+## 📦 Estructura del Proyecto
+
+Este repositorio utiliza **Nx** para gestionar tanto el frontend como el backend en un solo lugar.
+
+```text
+GopherDrop/
+├── apps/
+│   ├── go-api/        # API REST escrita en Go
+│   └── web/           # Aplicación Frontend en React
+├── docs/              # Activos y documentación
+└── packages/          # Librerías compartidas (opcional)
 ```
 
-## Run tasks
+---
 
-To build the library use:
+## 🏁 Primeros Pasos
 
-```sh
-npx nx build pkg1
+### Requisitos Previos
+- **Go** (1.21 o superior)
+- **Node.js** (18 o superior)
+- **npm** o **pnpm**
+
+### Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/GopherDrop.git
+   cd GopherDrop
+   ```
+
+2. Instala las dependencias del frontend:
+   ```bash
+   npm install
+   ```
+
+3. Instala las dependencias del backend:
+   ```bash
+   cd apps/go-api
+   go mod tidy
+   cd ../..
+   ```
+
+---
+
+## 🏃 Cómo ejecutar
+
+GopherDrop utiliza Nx para simplificar la ejecución. Puedes correr ambos servicios simultáneamente:
+
+```bash
+# Ejecutar Backend y Frontend al mismo tiempo
+npx nx run-many -t serve --projects=web,go-api
 ```
 
-To run any task with Nx use:
+O individualmente:
 
-```sh
-npx nx <target> <project-name>
+```bash
+# Backend solo
+npx nx serve go-api
+
+# Frontend solo
+npx nx serve web
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+La API estará disponible en `http://localhost:8080` y el frontend en `http://localhost:4200`.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Versioning and releasing
+## 📖 Documentación de la API
 
-To version and release the library use
+La API cuenta con documentación automática vía Swagger. Una vez que el backend esté en ejecución, puedes acceder en:
 
-```
-npx nx release
-```
+`http://localhost:8080/swagger/index.html`
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+### Endpoints principales:
+- `GET /files`: Lista todos los archivos.
+- `POST /upload`: Sube un nuevo archivo.
+- `GET /download/:id`: Descarga un archivo por su ID.
+- `GET /thumbnails/:id`: Obtiene la miniatura de una imagen.
+- `DELETE /files/:id`: Elimina un archivo permanentemente.
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Keep TypeScript project references up to date
+## 📄 Licencia
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+---
 
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-## Nx Cloud
-
-Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Set up CI (non-Github Actions CI)
-
-**Note:** This is only required if your CI provider is not GitHub Actions.
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Desarrollado con ❤️ por **Franco** utilizando Go, React y Nx.
